@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Promise examples</title>
+  <script src="promise.js"></script>
+</head>
+<body>
+
+  <h1>Weekend of wife</h1>
+  
+  <button type="button" onclick="haveFun()">Have Fun</button>
+  <p><b>*See the result in console</b></p>
+  <script>
+    function shopping() {
+        return new Promise(function(resolve, reject) {
+            console.log("周末啦，去逛街！！！")
+    
+            setTimeout(function() {
+                if (Math.random() > 0.7) {
+                    console.log("买了好多衣服，爽 - ^_^")
+                    resolve("happy");
+                } else {
+                    console.log("为什么一件合适的都没有 - >_<")
+                    resolve("unhappy");
+                }
+            }, 2000);
+        });
+    }
+    
+    function eating(mood) {
+        return new Promise(function(resolve, reject) {
+            
+            setTimeout(function() { 
+                console.log("逛完了，找地方吃饭");
+            }, 1000);
+            
+            
+            var rate;
+            mood === "happy"?rate=0.1:rate=0.9;
+            
+            setTimeout(function() {
+                if (Math.random() > rate) {
+                    console.log("很不错哦，晚餐开始 - ^_^");
+                    resolve("full");
+                } else {
+                    console.log("唉，没什么胃口 - >_<");
+                    resolve("empty");
+                }
+        
+            }, 3000);
+        });
+    }
+    
+    function haveFun() {
+        shopping()
+        .then(function(value) {
+                return eating(value);
+            })
+        .then(function(value) {
+                setTimeout(function() {
+                    if(value === "full") {
+                        console.log("吃饱睡个美容觉！！！");
+                    }
+                    else {
+                        console.log("肚子好饿，睡不着。。。");
+                    }
+                }, 1000);
+            });
+    }
+  </script>
+  
+  <hr/>
+  
+  <h1>Promise in depth</h1>
+  <button type="button" onclick="example1()">Run example #1</button>
+  <button type="button" onclick="example2()">Run example #2</button>
+  <button type="button" onclick="example3()">Run example #3</button>
+  <button type="button" onclick="example4()">Run example #4</button>
+  <p><b>*See the result in console</b></p>
+  <script>
+    function doSomething() {
+        console.log("doSomething(): start");
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+            console.log("doSomething(): end");
+            resolve();
+            }, 1000);
+        });
+    }
+    
+    function doSomethingElse() {
+        console.log("doSomethingElse(): start");
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+            console.log("doSomethingElse(): end");
+            resolve();
+            }, 1000);
+        });
+    }
+    
+    function finalHandler() {
+        console.log("finalHandler(): start");
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+            console.log("finalHandler(): end");
+            resolve();
+            }, 1000);
+        });
+    }
+    
+    function example1() {
+        doSomething()
+        .then(function () {
+                return doSomethingElse();
+            })
+        .then(finalHandler);
+    }
+    
+    function example2() {
+        doSomething()
+        .then(function () {
+                doSomethingElse();
+            })
+        .then(finalHandler); 
+    }
+    
+    function example3() {
+        doSomething()
+        .then(doSomethingElse())
+        .then(finalHandler);
+    }
+    
+    function example4() {
+        doSomething()
+        .then(doSomethingElse)
+        .then(finalHandler);
+    }
+    
+  </script>
+
+</body>
+</html>
+
+
+
