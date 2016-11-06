@@ -179,11 +179,16 @@ doSomething
 
 ### Promise/A+简单实现
 
-对于Promise规范，一定要抓住下面几个重点：
-1. promise有三种状态，等待（pending）、已完成（fulfilled）、已拒绝（rejected）
-2. promise的状态只能从“等待”转到“完成”或者“拒绝”，不能逆向转换，同时“完成”和“拒绝”也不能相互转换
-3. promise必须有一个then方法，而且要返回一个promise，供then的链式调用，也就是可thenable的
-4. then接受俩个回调(成功与拒绝)，在相应的状态转变时触发，回调可返回promise，等待此promise被resolved后，继续触发then链
+对于Promise规范，一定要抓住下面几个重点：  
+
+1. promise有三种状态，等待（pending）、已完成（fulfilled）、已拒绝（rejected） 
+
+2. promise的状态只能从“等待”转到“完成”或者“拒绝”，不能逆向转换，同时“完成”和“拒绝”也不能相互转换  
+
+3. promise必须有一个then方法，而且要返回一个promise，供then的链式调用，也就是可thenable的  
+
+4. then接受俩个回调(成功与拒绝)，在相应的状态转变时触发，回调可返回promise，等待此promise被resolved后，继续触发then链  
+
 
 
 根据上面的几个点，就可以实现一个简单的Promies，具体实现参考Promise.js。  
